@@ -104,13 +104,7 @@ public class GuiInstaller extends GuiContainer {
 
             switch (operation) {
                 case 0: // half
-                    if (target[xyz] < 0) {
-                        target[xyz] *= 2;
-                    } else if (target[xyz] > 0) {
-                        target[xyz] /= 2;
-                    } else {
-                        --target[xyz];
-                    }
+                    target[xyz] -= 10;
                     break;
                 case 1: // decrement
                     --target[xyz];
@@ -119,13 +113,7 @@ public class GuiInstaller extends GuiContainer {
                     ++target[xyz];
                     break;
                 case 3: // double
-                    if (target[xyz] < 0) {
-                        target[xyz] /= 2;
-                    } else if (target[xyz] > 0) {
-                        target[xyz] *= 2;
-                    } else {
-                        ++target[xyz];
-                    }
+                    target[xyz] += 10;
                     break;
             }
 
