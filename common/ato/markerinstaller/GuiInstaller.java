@@ -4,6 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.io.ByteArrayOutputStream;
@@ -18,7 +19,7 @@ public class GuiInstaller extends GuiContainer {
     private static final int TOP_MARGIN = 14;
     private static final int LEFT_MARGIN = 7;
     private static final int GRID_SIZE = 20;
-    private static final int TEXT_WIDTH = 50;
+    private static final int TEXT_WIDTH = 60;
     private static final int BUTTON_SIZE_SMALL = 10;
     private static final int BUTTON_WIDTH_INSTALL = 40;
     private static final int BUTTON_WIDTH_SAVE = BUTTON_WIDTH_INSTALL * 8 / 10;
@@ -75,7 +76,7 @@ public class GuiInstaller extends GuiContainer {
         GL11.glDisable(GL11.GL_LIGHTING);
 
         ContainerInstaller con = (ContainerInstaller) this.inventorySlots;
-        String[] text = new String[]{"x: " + con.getxRange(), "y: " + con.getyRange(), "z: " + con.getzRange()};
+        String[] text = new String[]{"Right:" + con.getxRange(), "Up:" + con.getyRange(), "Front:" + con.getzRange()};
         for (int i = 0; i < text.length; ++i) {
             int line = TOP_MARGIN + GRID_SIZE * i;
             fontRenderer.drawString(text[i],
@@ -94,9 +95,10 @@ public class GuiInstaller extends GuiContainer {
         int y = con.getyRange();
         int z = con.getzRange();
         if (button.id == BUTTON_ID_INSTALL) {
-            sendPakcet(PacketType.INSTALL, x, y, z);
+            int dir = MathHelper.floor_double((double) (this.mc.thePlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+            sendPakcet(PacketType.INSTALL, x, y, z, dir);
         } else if (button.id == BUTTON_ID_SAVE) {
-            sendPakcet(PacketType.SAVE, x, y, z);
+            sendPakcet(PacketType.SAVE, x, y, z, 0);
         } else if (BUTTON_ID_BASE_RANGES <= button.id) {
             int xyz = (button.id - 100) / 4;
             int operation = (button.id - 100) % 4;
@@ -117,11 +119,11 @@ public class GuiInstaller extends GuiContainer {
                     break;
             }
 
-            sendPakcet(PacketType.UPDATE, target[0], target[1], target[2]);
+            sendPakcet(PacketType.UPDATE, target[0], target[1], target[2], 0);
         }
     }
 
-    private void sendPakcet(PacketType type, int x, int y, int z) {
+    private void sendPakcet(PacketType type, int x, int y, int z, int dir) {
         ByteArrayOutputStream data = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(data);
         try {
@@ -129,6 +131,7 @@ public class GuiInstaller extends GuiContainer {
             out.writeInt(x);
             out.writeInt(y);
             out.writeInt(z);
+            out.writeByte(dir);
             this.mc.getSendQueue().addToSendQueue(new Packet250CustomPayload("GUI_INSTALLER", data.toByteArray()));
         } catch (IOException e) {
             e.printStackTrace();

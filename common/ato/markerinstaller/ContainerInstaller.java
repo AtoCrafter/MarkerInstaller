@@ -66,10 +66,32 @@ public class ContainerInstaller extends Container {
         }
     }
 
-    public void install(EntityPlayer player, World world, int diffX, int diffY, int diffZ) {
+    public void install(EntityPlayer player, World world, int x, int y, int z, int dir) {
         ItemStack is = sink.getStackInSlot(0);
         if (is != null && is.getItem() instanceof ItemBlock) {
             ItemBlock ib = (ItemBlock) is.getItem();
+
+            // 向いている方向に合わせる
+            int diffX = 0, diffY = 0, diffZ = 0;
+            switch (dir) {
+                case 0: // 南向き
+                    diffX = -x;
+                    diffZ = z;
+                    break;
+                case 1: // 西向き
+                    diffX = -z;
+                    diffZ = -x;
+                    break;
+                case 2: // 北向き
+                    diffX = x;
+                    diffZ = -z;
+                    break;
+                case 3: // 東向き
+                    diffX = z;
+                    diffZ = x;
+                    break;
+            }
+            diffY = y;
 
             // 値の補正（diff の絶対値が辺の長さとなるように）
             if (diffX < 0) {

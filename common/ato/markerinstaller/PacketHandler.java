@@ -21,13 +21,14 @@ public class PacketHandler implements IPacketHandler {
             int diffX = in.readInt();
             int diffY = in.readInt();
             int diffZ = in.readInt();
+            int dir = in.readByte();
             if (player instanceof EntityPlayer) {
                 EntityPlayer entityPlayer = (EntityPlayer) player;
                 Container container = entityPlayer.openContainer;
                 if (container instanceof ContainerInstaller) {
                     ContainerInstaller ci = (ContainerInstaller) container;
                     if (type == PacketType.INSTALL.ordinal()) {
-                        ci.install(entityPlayer, entityPlayer.worldObj, diffX, diffY, diffZ);
+                        ci.install(entityPlayer, entityPlayer.worldObj, diffX, diffY, diffZ, dir);
                     } else if (type == PacketType.SAVE.ordinal()) {
                         ci.save(entityPlayer.getCurrentEquippedItem());
                     } else if (type == PacketType.UPDATE.ordinal()) {
