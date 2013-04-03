@@ -66,6 +66,39 @@ public class ContainerInstaller extends Container {
         }
     }
 
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer player, int index) {
+        ItemStack stackBackup = null;
+        Slot slot = (Slot) inventorySlots.get(index);
+
+        if (slot != null && slot.getHasStack()) {
+            ItemStack slotStack = slot.getStack();
+            stackBackup = slotStack.copy();
+
+            int border = inventorySlots.size() - 36;
+            if (index < border) {
+                if (!mergeItemStack(slotStack, border, inventorySlots.size(), false)) {
+                    return null;
+                }
+            } else {
+                Slot sinkSlot = (Slot)inventorySlots.get(0);
+                if (sinkSlot != null && !sinkSlot.getHasStack()) {
+                    sinkSlot.putStack(slotStack.copy());
+                    slotStack.stackSize = 0;
+                } else {
+                    return null;
+                }
+            }
+            if (slotStack.stackSize == 0) {
+                slot.putStack(null);
+            } else {
+                slot.onSlotChanged();
+            }
+        }
+
+        return stackBackup;
+    }
+
     public void install(EntityPlayer player, World world, int x, int y, int z, int dir) {
         ItemStack is = sink.getStackInSlot(0);
         if (is != null && is.getItem() != null) {
