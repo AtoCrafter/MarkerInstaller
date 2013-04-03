@@ -2,7 +2,7 @@ package ato.markerinstaller;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -68,8 +68,8 @@ public class ContainerInstaller extends Container {
 
     public void install(EntityPlayer player, World world, int x, int y, int z, int dir) {
         ItemStack is = sink.getStackInSlot(0);
-        if (is != null && is.getItem() instanceof ItemBlock) {
-            ItemBlock ib = (ItemBlock) is.getItem();
+        if (is != null && is.getItem() != null) {
+            Item item = is.getItem();
 
             // 向いている方向に合わせる
             int diffX = 0, diffY = 0, diffZ = 0;
@@ -111,10 +111,10 @@ public class ContainerInstaller extends Container {
             }
 
             // 設置
-            ib.onItemUse(is, player, world, xCoord, yCoord, zCoord, side, 0, 0, 0);
-            ib.onItemUse(is, player, world, xCoord + diffX, yCoord, zCoord, side, 0, 0, 0);
-            ib.onItemUse(is, player, world, xCoord, yCoord + diffY, zCoord, side, 0, 0, 0);
-            ib.onItemUse(is, player, world, xCoord, yCoord, zCoord + diffZ, side, 0, 0, 0);
+            item.onItemUse(is, player, world, xCoord, yCoord, zCoord, side, 0, 0, 0);
+            item.onItemUse(is, player, world, xCoord + diffX, yCoord, zCoord, side, 0, 0, 0);
+            item.onItemUse(is, player, world, xCoord, yCoord + diffY, zCoord, side, 0, 0, 0);
+            item.onItemUse(is, player, world, xCoord, yCoord, zCoord + diffZ, side, 0, 0, 0);
 
             if (is.stackSize == 0) {
                 sink.setInventorySlotContents(0, null);
@@ -131,7 +131,6 @@ public class ContainerInstaller extends Container {
             crafter.sendProgressBarUpdate(this, 0, x);
             crafter.sendProgressBarUpdate(this, 1, y);
             crafter.sendProgressBarUpdate(this, 2, z);
-
         }
     }
 
