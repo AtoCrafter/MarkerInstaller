@@ -1,0 +1,16 @@
+[
+{
+  "modid": "MarkerInstaller",
+  "name": "Marker Installer",
+  "description": "",
+  "version": "@VERSION@",
+  "mcversion": "@MCVERSION@",
+  "url": "http://atocrafter.github.com/MarkerInstaller/",
+  "authors": [
+    "Ato"
+  ],
+  "dependencies": [
+    "mod_MinecraftForge"
+  ]
+}
+]

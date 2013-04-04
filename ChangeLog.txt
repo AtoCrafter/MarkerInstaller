@@ -1,0 +1,9 @@
+# 変更履歴
+
+## バージョン別
+
+### 1.0.0
+
+リリース。
+Minecraft 1.4.7 用。
+前提 MOD : MinecraftForge
