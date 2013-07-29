@@ -22,9 +22,4 @@ public class ItemInstaller extends Item {
         }
         return true;
     }
-
-    @Override
-    public String getTextureFile() {
-        return "/ato/markerinstaller/item.png";
-    }
 }

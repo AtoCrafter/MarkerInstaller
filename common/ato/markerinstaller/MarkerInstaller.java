@@ -40,7 +40,7 @@ public class MarkerInstaller {
 
     @Init
     public void load(FMLInitializationEvent event) {
-        Item installer = new ItemInstaller(itemIDInstaller).setItemName("MarkerInstaller");
+        Item installer = new ItemInstaller(itemIDInstaller).setUnlocalizedName("MarkerInstaller");
         LanguageRegistry.addName(installer, "Marker Installer");
         NetworkRegistry.instance().registerGuiHandler(instance, new GuiHandler());
         // 制作レシピ

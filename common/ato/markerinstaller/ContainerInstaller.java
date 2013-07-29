@@ -18,7 +18,7 @@ public class ContainerInstaller extends Container {
         this.yCoord = y;
         this.zCoord = z;
         this.side = side;
-        sink = new InventoryBasic("MarkerInstallerSink", 1);
+        sink = new InventoryBasic("MarkerInstallerSink", false, 1);
 
         addSlotToContainer(new Slot(sink, 0, 100, 14));
         for (int i = 0; i < 3; ++i) {
