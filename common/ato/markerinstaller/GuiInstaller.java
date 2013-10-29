@@ -1,5 +1,6 @@
 package ato.markerinstaller;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
@@ -46,16 +47,16 @@ public class GuiInstaller extends GuiContainer {
             GuiButton butDecrement = new GuiButtonArrow(BUTTON_ID_BASE_RANGES + i * 4 + 1, Type.DECREMENT, left + BUTTON_SIZE_SMALL, line);
             GuiButton butIncrement = new GuiButtonArrow(BUTTON_ID_BASE_RANGES + i * 4 + 2, Type.INCREMENT, left + BUTTON_SIZE_SMALL + TEXT_WIDTH, line);
             GuiButton butDouble = new GuiButtonArrow(BUTTON_ID_BASE_RANGES + i * 4 + 3, Type.DOUBLE, left + TEXT_WIDTH + BUTTON_SIZE_SMALL * 2, line);
-            controlList.add(butIncrement);
-            controlList.add(butDecrement);
-            controlList.add(butDouble);
-            controlList.add(butHalf);
+            buttonList.add(butIncrement);
+            buttonList.add(butDecrement);
+            buttonList.add(butDouble);
+            buttonList.add(butHalf);
         }
         int right = ox + xSize - LEFT_MARGIN;
         GuiButton butInstall = new GuiButton(BUTTON_ID_INSTALL, right - BUTTON_WIDTH_INSTALL, oy + TOP_MARGIN, BUTTON_WIDTH_INSTALL, BUTTON_HEIGHT, "Install");
         GuiButton butSave = new GuiButton(BUTTON_ID_SAVE, right - BUTTON_WIDTH_SAVE, oy + TOP_MARGIN + GRID_SIZE * 2, BUTTON_WIDTH_SAVE, BUTTON_HEIGHT, "Save");
-        controlList.add(butInstall);
-        controlList.add(butSave);
+        buttonList.add(butInstall);
+        buttonList.add(butSave);
     }
 
     /**
@@ -63,9 +64,8 @@ public class GuiInstaller extends GuiContainer {
      */
     @Override
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-        int var4 = mc.renderEngine.getTexture("/ato/markerinstaller/gui.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.renderEngine.bindTexture(var4);
+        mc.renderEngine.bindTexture("/mods/markerinstaller/textures/gui/installer.png");
         int var5 = (width - xSize) / 2;
         int var6 = (height - ySize) / 2;
         drawTexturedModalRect(var5, var6, 0, 0, xSize, ySize);
@@ -132,7 +132,7 @@ public class GuiInstaller extends GuiContainer {
             out.writeInt(y);
             out.writeInt(z);
             out.writeByte(dir);
-            this.mc.getSendQueue().addToSendQueue(new Packet250CustomPayload("GUI_INSTALLER", data.toByteArray()));
+            PacketDispatcher.sendPacketToServer(new Packet250CustomPayload("GUI_INSTALLER", data.toByteArray()));
         } catch (IOException e) {
             e.printStackTrace();
         }
