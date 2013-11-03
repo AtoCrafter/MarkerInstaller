@@ -41,8 +41,8 @@ public class ContainerInstaller extends Container {
      * @see net.minecraft.inventory.ContainerWorkbench#onCraftGuiClosed(net.minecraft.entity.player.EntityPlayer)
      */
     @Override
-    public void onCraftGuiClosed(EntityPlayer player) {
-        super.onCraftGuiClosed(player);
+    public void onContainerClosed(EntityPlayer player) {
+        super.onContainerClosed(player);
         if (!player.worldObj.isRemote) {
             ItemStack is = sink.getStackInSlotOnClosing(0);
             if (is != null) {
