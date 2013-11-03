@@ -26,7 +26,7 @@ public class GuiButtonArrow extends GuiButton {
     @Override
     public void drawButton(Minecraft mc, int par2, int par3) {
         if (this.drawButton) {
-            mc.getTextureManager().bindTexture(new ResourceLocation("/mods/markerinstaller/textures/gui/installer.png"));
+            mc.getTextureManager().bindTexture(new ResourceLocation("markerinstaller:/textures/gui/installer.png"));
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             int i = type.ordinal();
             int dx = 10 * (i % 2);
