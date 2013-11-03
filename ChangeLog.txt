@@ -7,3 +7,8 @@
 リリース。
 Minecraft 1.4.7 用。
 前提 MOD : MinecraftForge
+
+
+### 1.1.0
+
+Minecraft 1.6.4 対応。

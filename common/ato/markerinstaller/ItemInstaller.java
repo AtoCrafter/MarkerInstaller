@@ -1,5 +1,8 @@
 package ato.markerinstaller;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,7 +27,8 @@ public class ItemInstaller extends Item {
     }
 
     @Override
-    public String getTextureFile() {
-        return "/ato/markerinstaller/item.png";
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister iconRegister) {
+        this.itemIcon = iconRegister.registerIcon("markerinstaller:installer");
     }
 }
