@@ -6,6 +6,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
 import java.io.ByteArrayOutputStream;
@@ -65,7 +67,7 @@ public class GuiInstaller extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.renderEngine.bindTexture("/mods/markerinstaller/textures/gui/installer.png");
+        mc.getTextureManager().bindTexture(new ResourceLocation("/mods/markerinstaller/textures/gui/installer.png"));
         int var5 = (width - xSize) / 2;
         int var6 = (height - ySize) / 2;
         drawTexturedModalRect(var5, var6, 0, 0, xSize, ySize);
